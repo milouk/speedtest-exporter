@@ -55,15 +55,12 @@ def is_json(myjson):
 
 
 def runTest():
-    serverID = os.environ.get('SPEEDTEST_SERVER')
-    timeout = int(os.environ.get('SPEEDTEST_TIMEOUT', 90))
+    timeout = 90
 
     cmd = [
         "speedtest", "--format=json-pretty", "--progress=no",
         "--accept-license", "--accept-gdpr"
     ]
-    if serverID:
-        cmd.append(f"--server-id={serverID}")
     try:
         output = subprocess.check_output(cmd, timeout=timeout)
     except subprocess.CalledProcessError as e:
@@ -144,7 +141,7 @@ def checkForBinary():
 
 if __name__ == '__main__':
     checkForBinary()
-    PORT = os.getenv('SPEEDTEST_PORT', 9798)
+    PORT = 9798
     logging.info("Starting Speedtest-Exporter on http://localhost:" +
                  str(PORT))
     serve(app, host='0.0.0.0', port=PORT)
